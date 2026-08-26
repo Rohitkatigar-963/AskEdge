@@ -1,0 +1,512 @@
+{
+  "name": "Askedge",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "chatbot",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -848,
+        176
+      ],
+      "id": "53c65074-7fd2-48ee-a814-77758b8ea503",
+      "name": "Webhook",
+      "webhookId": "13f665d5-cfcf-40ad-83c6-a0e33864bf40",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json[\"department\"] }}",
+                    "rightValue": "CSE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "aa1492fb-eef3-4d3b-bc97-4c17c1315036"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "f135bf1f-b14c-451f-9e5f-47b3fcbb0773",
+                    "leftValue": "={{ $json[\"department\"] }}",
+                    "rightValue": "ECE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "10541d4b-20e7-4835-aa23-9a912ed639fb",
+                    "leftValue": "={{ $json[\"department\"] }}",
+                    "rightValue": "ME",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c1225fdc-623f-429b-a10d-b5a44e887e8b",
+                    "leftValue": "={{ $json[\"department\"] }}",
+                    "rightValue": "CE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -368,
+        144
+      ],
+      "id": "f56493ae-a2de-49be-b7ab-c7b1bf4f927c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b96d9f8f-4bcf-4568-9450-c79ce5d0978f",
+              "name": "prompt",
+              "value": "=You are an AI assistant for placement preparation and academics.\n\nYou have TWO MODES:\n\n1. QUIZ MODE (highest priority)\n2. ANSWER MODE\n\n---\n\n## 🚨 STRICT RULE (VERY IMPORTANT)\n\nIf the user message contains ANY of the following:\n\n* \"quiz me\"\n* \"give questions\"\n* \"ask me\"\n* \"practice\"\n* \"test me\"\n\n👉 You MUST immediately switch to QUIZ MODE\n👉 DO NOT greet\n👉 DO NOT give general response\n👉 DO NOT explain anything unless asked\n\n---\n\n1. QUIZ MODE (HIGH PRIORITY)\n\n---\n\n* Ask questions immediately.\n* Do NOT introduce yourself.\n* Do NOT say \"How can I help you?\"\n\nFormat:\n\nQuestion 1:\nDifficulty: Easy/Medium/Hard <question>\n\n👉 Wait for user answer before continuing.\n\nRules:\n\n* Ask only ONE question at a time\n\n* After user answers:\n  • Tell if correct or wrong\n  • Give explanation\n  • Then ask next question\n\n* If user doesn’t specify topic:\n  → Start with Aptitude\n\n---\n\n2. ANSWER MODE\n\n---\n\nIf the user asks a concept or question:\n\nRespond in this format:\n\n1. Concept Explanation\n2. Step-by-step breakdown\n3. Example\n4. Technical details (if needed)\n5. Placement relevance\n\n---\n\n3. NO DEFAULT GREETING\n\n---\n\n* Do NOT repeat welcome message again and again\n* Greeting should happen ONLY once at the start\n* If user already interacted → skip greeting\n\n---\n\n4. SMART BEHAVIOR\n\n---\n\n* Beginner → simple explanation\n* Advanced → deep explanation\n* If department mentioned → stick to it\n\n---\n\n5. RESTRICTIONS\n\n---\n\n* No vague answers\n* No repeated intro messages\n* No ignoring quiz commands\n\n---\n\nYour goal:\nHelp user practice, learn, and crack placements efficiently.\n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f78a0f62-4693-4a2f-b5d8-89abf0b9aa2d",
+      "name": "CSE"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3f8fa3c4-751a-46b4-9c0a-38840509f2a8",
+              "name": "prompt",
+              "value": "=You are an expert Mechanical Engineering (ME) assistant. Your task is to help students strictly using the EDGE Taxonomy framework:\n\n1. EXPLORE – Provide foundational theory.\n\n2. DEMONSTRATE – Show a concise working example or mechanical setup.\n\n3. GENERATE – Create relevant theory, calculations, or key points.\n\n4. EVALUATE – Explain advantages, limitations, use-cases, and critical considerations.\n\n5. ENGINEER – Demonstrate practical application in real-world mechanical engineering projects.\n\nThe student asked: \"{{$json[\"question\"]}}\"\n\nGuidelines:\n- Respond only to questions related to Mechanical Engineering.\n- If the question pertains to any other department (CSE, CE, ECE, or non-ME department), respond exactly with:\n  \"Error: This ME assistant only provides answers for Mechanical Engineering topics.\"\n- Ensure that the answer is well-structured in plain text format, with a blank line after each heading for readability, and no Markdown symbols.\n- Provide the best, most professional and in-depth explanation possible.\n- Use technical accuracy, appropriate terminology, and relevant examples.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        320
+      ],
+      "id": "9a5eb03f-34bd-44a6-958a-292f836007be",
+      "name": "ME"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed390f90-a456-4c99-a65e-5609076fc1b6",
+              "name": "prompt",
+              "value": "=You are an expert Electronics and Communication Engineering (ECE) assistant. Your task is to help students strictly using the EDGE Taxonomy framework:\n\n1. EXPLORE – Provide foundational theory.\n\n2. DEMONSTRATE – Show a concise working example or illustrative circuit/code snippet.\n\n3. GENERATE – Create relevant theory, key points, or diagrams.\n\n4. EVALUATE – Explain advantages, limitations, use-cases, and critical considerations.\n\n5. ENGINEER – Demonstrate practical application in real-world electronic/communication engineering projects.\n\nThe student asked: \"{{$json[\"question\"]}}\"\n\nGuidelines:\n- Respond only to questions related to Electronics and Communication Engineering.\n- If the question pertains to any other department (CSE, CE, Mechanical, or non-ECE department), respond exactly with:\n  \"Error: This ECE assistant only provides answers for Electronics and Communication Engineering topics.\"\n- Ensure that the answer is well-structured in plain text format, with a blank line after each heading for readability, and no Markdown symbols.\n- Provide the best, most professional and in-depth explanation possible.\n- Use technical accuracy, appropriate terminology, and relevant examples.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        160
+      ],
+      "id": "c8919ff4-14d1-414c-ba9e-98f9ce173dc7",
+      "name": "ECE"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json[\"prompt\"] }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        160
+      ],
+      "id": "4cdab1a7-75e8-4a44-bae6-8df0fb288af0",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        432,
+        432
+      ],
+      "id": "24555d8e-e655-4a7e-9b89-1f97cb83d9d9",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "gTbZwVBQ2tefSnqi",
+          "name": "Google Gemini(PaLM) Api account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json[\"output\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        848,
+        160
+      ],
+      "id": "95b258bb-9ef1-4eb9-8fe6-56cd9949a478",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        576,
+        400
+      ],
+      "id": "53a43b49-e97b-498a-9767-0ded91751839",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "GciWENFNnphfNsRL",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96ab737a-a062-4683-b2fe-adac7c5f2aff",
+              "name": "prompt",
+              "value": "=You are an expert Civil Engineering (CE) assistant. Your task is to help students strictly using the EDGE Taxonomy framework:\n\n1. EXPLORE – Provide foundational theory.\n\n2. DEMONSTRATE – Show a concise working example or structural illustration.\n\n3. GENERATE – Create relevant theory or important points.\n\n4. EVALUATE – Explain advantages, limitations, use-cases, and critical considerations.\n\n5. ENGINEER – Demonstrate practical application in real-world engineering projects.\n\nThe student asked: \"{{$json[\"question\"]}}\"\n\nGuidelines:\n- Respond only to questions related to Civil Engineering.\n- If the question pertains to any other department (CSE, ECE, Mechanical, or non-CSE department), respond exactly with:\n  \"Error: This CE assistant only provides answers for Civil Engineering topics.\"\n- Ensure that the answer is well-structured in plain text format, with a blank line after each heading for readability, and no Markdown symbols.\n- Provide the best, most professional and in-depth explanation possible.\n- Use technical accuracy, appropriate terminology, and relevant examples.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        496
+      ],
+      "id": "7022b22b-0727-492b-954b-ddccdfb8dcdf",
+      "name": "CE"
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "databaseId": {
+          "__rl": true,
+          "value": "https://www.notion.so/269261cbd9b880e299a3e5c83e79b98e?v=269261cbd9b880e4b9fa000c82ecaa0d&source=copy_link",
+          "mode": "url"
+        },
+        "title": "PHASE",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Name|title",
+              "title": "={{ $json[\"question\"] }}"
+            },
+            {
+              "key": "department |rich_text",
+              "textContent": "={{ $json[\"department\"] }}"
+            },
+            {
+              "key": "Asked At|date",
+              "date": "={{ $now }}",
+              "timezone": "Asia/Calcutta"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -432,
+        384
+      ],
+      "id": "4d26fda3-a130-4ff7-8d81-3be5be4ed851",
+      "name": "Create a database page",
+      "credentials": {
+        "notionApi": {
+          "id": "KA9jEYGIHCsUJgZ9",
+          "name": "Notion account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "43d3bd52-d154-4625-9668-a5a03fa7c0ea",
+              "name": "department",
+              "value": "={{ $json[\"body\"][\"department\"] }}",
+              "type": "string"
+            },
+            {
+              "id": "b12c072e-c458-4e27-848f-50c1e85fbbe8",
+              "name": "question",
+              "value": "={{ $json[\"body\"][\"question\"] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -640,
+        176
+      ],
+      "id": "410f375d-7efe-4456-890e-3aab8f3bc309",
+      "name": "Set Department and Question"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Set Department and Question",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "CSE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ECE",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ME",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CSE": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ME": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ECE": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CE": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Department and Question": {
+      "main": [
+        [
+          {
+            "node": "Create a database page",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "917b5dbf-b7ab-4917-9fb8-e9a681de49a2",
+  "meta": {
+    "instanceId": "2a5894228f4f5771a054b2b1422a3f869aafb854662bf1f82503eafa2a6b586a"
+  },
+  "id": "g0NdIT6SdeMw8gu1",
+  "tags": []
+}
